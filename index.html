@@ -3,9 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>NFC Payment</title>
 </head>
 
@@ -30,15 +28,12 @@
                 return;
             }
 
-
-            // NFC reader normally sends Enter
-            // after reading the card number
+            // NFC reader sends Enter after card number
             if (event.key === "Enter") {
 
                 const cardNumber = nfcInput.trim();
 
                 console.log("NFC Card:", cardNumber);
-
 
                 // =========================
                 // AUTHORISED NFC CARD
@@ -48,19 +43,18 @@
 
                     console.log("Card accepted");
 
+                    // Send card number to paymentPage.html
+                    // as the "amount" parameter
                     window.location.href =
-                        "paymentPage.html";
+                        "paymentPage.html?amount=" +
+                        encodeURIComponent(cardNumber);
 
-                }
-
-                else {
+                } else {
 
                     console.log("Unknown card");
-
                     alert("Card not recognised.");
 
                 }
-
 
                 // Reset reader
                 nfcInput = "";
@@ -68,15 +62,12 @@
                 return;
             }
 
-
             // =========================
             // COLLECT NFC CARD NUMBER
             // =========================
 
             if (/^[0-9]$/.test(event.key)) {
-
                 nfcInput += event.key;
-
             }
 
         });
